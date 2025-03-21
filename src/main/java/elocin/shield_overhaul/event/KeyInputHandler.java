@@ -23,12 +23,14 @@ public class KeyInputHandler {
             if (stack.getNbt() == null) return;
 
             if (client.player.isBlocking()) {
+                if (client.options.sprintKey.isPressed() && client.options.sprintKey.wasPressed()) {
                     if (!client.player.getItemCooldownManager().isCoolingDown(stack.getItem())) {
                         AnimUtils.playAnimation(client.player, "bash_right", client.player.getActiveHand().equals(Hand.OFF_HAND));
                     }
                     ClientPlayNetworking.send(PacketRegistry.SHIELD_BASH, PacketByteBufs.empty());
                 }
-            
+            }
+
 
             if (client.player.getItemUseTime() == 1 && !stack.getNbt().getBoolean("holdStarted")) {
                 ClientPlayNetworking.send(PacketRegistry.HOLD_BEGIN, PacketByteBufs.empty());
